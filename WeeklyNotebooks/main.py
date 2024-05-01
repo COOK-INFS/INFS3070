@@ -52,7 +52,7 @@ text_widget.grid(
     column=5,
     columnspan=3,
     ipadx=5,
-    ipady=5,
+    ipady=1,
     padx=5,
     pady=5,
     sticky="e"
@@ -106,6 +106,44 @@ def clear_inputs():
 # Create a button to insert the records
 insert_button = ctk.CTkButton(master=window, text="INSERT", command=insert_records)
 insert_button.grid(row=5, column=0, padx=10, pady=10)
+
+
+# ------------------------------ UPDATE RECORDS --------------------------------
+# Create a function to update records
+def update_record():
+    studentID = studentID_input.get()
+    firstName = firstName_input.get()
+    lastName = lastName_input.get()
+    email = email_input.get()
+    sql = "UPDATE STUDENTS SET firstName=%s, lastName=%s, email=%s WHERE studentID=%s"
+    val = (firstName, lastName, email, studentID)
+    cursor.execute(sql, val)
+    conn.commit()
+    clear_inputs()
+
+# Add the button for updating records
+update_button = ctk.CTkButton(master=window, text="Update", command=update_record)
+update_button.grid(row=5, column=1, padx=10, pady=10)
+
+
+
+# ------------------------------ DELETE RECORDS ---------------------------------
+def delete_record():
+    studentID_input.get()
+    sql="DELETE FROM STUDENTS WHERE studentID=%s"
+    val = (studentID_input.get(),)
+    cursor.execute(sql,val)
+    conn.commit()
+    clear_inputs()
+
+# Create the button for deleting records
+delete_button = ctk.CTkButton(master=window, fg_color="red", text="Delete", command=delete_record)
+delete_button.grid(row=6, column=1, padx=10, pady=10)
+
+
+
+
+
 
 # Ensure the window renders
 window.mainloop()
